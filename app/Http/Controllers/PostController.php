@@ -48,11 +48,14 @@ class PostController extends Controller
         $data->content = $request->content;
         $data->category_id = $request->category_id;
         $data->author = $request->author;
+        $image_name = time().$request->image->getClientOriginalName();
+        $request->image->storeAs("public/images",$image_name);
+        $data->image = $image_name;
         $saved = $data->save();
 
         if($saved){
             return response()->json([
-                'message'=>'data saved successfully',
+                'message'=>"inserted successfully",
             ],200);
         }
 
